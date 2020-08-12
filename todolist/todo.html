@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+        <script src="vue.js" type="text/javascript" charset="utf-8"></script>
+        <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="todo.css">
+	</head>
+	<body>
+        <div id="todoApp">
+            <h3> {{ message }}</h3>
+            <form name="todo-form" method="post" action="" v-on:submit.prevent="addTask">
+                <input name="add-todo" type="text" v-model="addTodoInput" v-bind:class="{error: hasError}"/>
+                <button type="submit">Add</button>
+            </form>
+            <div class="todo-lists" v-if="lists.length">
+                <h3>Todo Tasks</h3>
+                <ul>
+                    <li v-for="list in filterLists" :key="list.id">
+                        <input type="checkbox" v-on:change="completeTask(list)" v-bind:checked="list.isComplete"/>
+
+                        <span class="title" 
+                          contenteditable="true"
+                          v-on:keydown.enter="updateTask($event, list)"
+                          v-on:blur="updateTask($event, list)"
+                          v-bind:class="{completed: list.isComplete}">{{ list.title }}</span>
+                        <span class="remove" v-on:click="removeTask(list)">x</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+        var todoApp = new Vue({
+            el: "#todoApp",
+            data: {
+                message: 'Todo App',
+                addTodoInput: '',
+                lists: [], // this will hold all the created todo task items
+                hasError: false
+            },
+            computed: {
+                filterLists: function() {
+                    return _.orderBy(this.lists, ['isComplete', false])
+                }
+            },
+            methods: {
+                addTask: function() {
+                    // form submit action goes here
+                    if (!this.addTodoInput) {
+                        this.hasError = true;
+                        return;
+                    }
+                    this.hasError = false;
+
+                    this.lists.push({
+                        id: this.lists.length + 1,
+                        title: this.addTodoInput,
+                        isComplete: false
+                    });
+
+                    this.addTodoInput = ''; // clear the input after successful submission
+                },
+
+                updateTask: function(e, list) {
+                    e.preventDefault();
+                    list.title = e.target.innerText;
+                    e.target.blur();
+                },
+
+                completeTask: function(list) {
+                    list.isComplete = !list.isComplete;
+                },
+
+                removeTask: function(list) {
+                    var index = _.findIndex(this.lists, list);
+                    this.lists.splice(index, 1);
+                },
+                
+            }
+        }) 
+		</script>
+	</body>
+</html>
