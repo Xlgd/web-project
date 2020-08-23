@@ -19,3 +19,8 @@ https://www.freecodecamp.org/learn/responsive-web-design/responsive-web-design-p
 https://www.freecodecamp.org/learn/responsive-web-design/responsive-web-design-projects/build-a-technical-documentation-page
 
 - My CodePen: https://codepen.io/xlgd/pen/qBZqvqE
+
+### Build a Personal Portfolio Webpage
+https://www.freecodecamp.org/learn/responsive-web-design/responsive-web-design-projects/build-a-personal-portfolio-webpage
+
+- My CodePen: https://codepen.io/xlgd/pen/zYqNrYv
